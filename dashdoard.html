@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Dashboard</title>
+    <style>
+        /* DASHBOARD STYLES */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f8f0;
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 200px;
+            background: #6b8e23;
+            padding: 20px 0;
+        }
+        .tab {
+            padding: 15px 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tab:hover {
+            background: #7a9e2b;
+        }
+        .tab.active {
+            background: #ff8fab;
+            font-weight: bold;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="tab active" onclick="window.location.href='index.html'">
+                <i class="fas fa-calculator"></i> Calculator
+            </div>
+            <div class="tab">
+                <i class="fas fa-chart-line"></i> Analytics (Coming Soon)
+            </div>
+            <div class="tab">
+                <i class="fas fa-cog"></i> Settings (Coming Soon)
+            </div>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content">
+            <iframe src="index.html" title="Carbon Calculator"></iframe>
+        </div>
+    </div>
+</body>
+</html>
