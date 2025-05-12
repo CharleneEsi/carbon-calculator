@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Footprint Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Carbon Footprint Calculator</h1>
+        
+        <div class="calculator">
+            <div class="input-section">
+                <h2>Scope 1 & 2 Emissions</h2>
+                
+                <div class="form-group">
+                    <label for="fuel">Fuel Consumption (liters):</label>
+                    <input type="number" id="fuel" placeholder="e.g. 500">
+                </div>
+                
+                <div class="form-group">
+                    <label for="electricity">Electricity Usage (kWh):</label>
+                    <input type="number" id="electricity" placeholder="e.g. 2000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="gas">Natural Gas Usage (therms):</label>
+                    <input type="number" id="gas" placeholder="e.g. 300">
+                </div>
+            </div>
+            
+            <div class="input-section">
+                <h2>Business Information</h2>
+                
+                <div class="form-group">
+                    <label for="industry">Industry:</label>
+                    <select id="industry">
+                        <option value="">Select...</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="tech">Technology</option>
+                        <option value="retail">Retail</option>
+                        <option value="finance">Finance</option>
+                        <option value="healthcare">Healthcare</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="employees">Number of Employees:</label>
+                    <input type="number" id="employees" placeholder="e.g. 50">
+                </div>
+                
+                <div class="form-group">
+                    <label for="revenue">Annual Revenue ($):</label>
+                    <input type="number" id="revenue" placeholder="e.g. 5000000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <select id="location">
+                        <option value="">Select...</option>
+                        <option value="us">United States</option>
+                        <option value="eu">European Union</option>
+                        <option value="asia">Asia</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="predict-btn" class="hidden">Predict Scope 3 Emissions</button>
+            
+            <div class="results hidden" id="results">
+                <h2>Scope 3 Emission Prediction</h2>
+                
+                <div class="result-item highlight">
+                    <span>Predicted Scope 3 Emissions:</span>
+                    <span id="scope3">0</span> kg CO₂e
+                </div>
+                
+                <div class="explanation">
+                    <p>This prediction is based on your Scope 1 & 2 emissions combined with your business characteristics including industry, size, and location.</p>
+                </div>
+                
+                <div class="recommendations">
+                    <h3>Recommendations to Reduce Scope 3 Emissions:</h3>
+                    <ul>
+                        <li>Optimize your supply chain logistics</li>
+                        <li>Engage with suppliers to reduce their emissions</li>
+                        <li>Encourage remote work to reduce employee commuting</li>
+                        <li>Select low-carbon business travel options</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Show predict button when required fields are filled
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('change', checkFields);
+            input.addEventListener('input', checkFields);
+        });
+        
+        function checkFields() {
+            const fuel = document.getElementById('fuel').value;
+            const electricity = document.getElementById('electricity').value;
+            const gas = document.getElementById('gas').value;
+            const industry = document.getElementById('industry').value;
+            const employees = document.getElementById('employees').value;
+            const revenue = document.getElementById('revenue').value;
+            const location = document.getElementById('location').value;
+            
+            if (fuel && electricity && gas && industry && employees && revenue && location) {
+                document.getElementById('predict-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('predict-btn').classList.add('hidden');
+            }
+        }
+        
+        // Predict button functionality
+        document.getElementById('predict-btn').addEventListener('click', function() {
+            // Get input values
+            const fuel = parseFloat(document.getElementById('fuel').value) || 0;
+            const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+            const gas = parseFloat(document.getElementById('gas').value) || 0;
+            const industry = document.getElementById('industry').value;
+            const employees = parseFloat(document.getElementById('employees').value) || 0;
+            const revenue = parseFloat(document.getElementById('revenue').value) || 0;
+            const location = document.getElementById('location').value;
+            
+            // Calculate Scope 1 & 2 (for demo purposes)
+            const scope1 = fuel * 2.31 + gas * 5.3;
+            const scope2 = electricity * 0.85;
+            
+            // Create "sensible" random prediction based on inputs
+            let scope3;
+            
+            // Base calculation
+            scope3 = (scope1 + scope2) * (1.5 + Math.random() * 1.5);
+            
+            // Adjust by industry
+            const industryFactors = {
+                manufacturing: 2.0,
+                tech: 1.2,
+                retail: 1.5,
+                finance: 0.8,
+                healthcare: 1.3
+            };
+            scope3 *= industryFactors[industry] || 1;
+            
+            // Adjust by employee count
+            scope3 += employees * (100 + Math.random() * 50);
+            
+            // Adjust by revenue
+            scope3 += revenue * (0.0003 + Math.random() * 0.0004);
+            
+            // Adjust by location
+            const locationFactors = {
+                us: 1.1,
+                eu: 0.9,
+                asia: 1.3,
+                other: 1.0
+            };
+            scope3 *= locationFactors[location] || 1;
+            
+            // Round to nearest 1000 for realism
+            scope3 = Math.round(scope3 / 1000) * 1000;
+            
+            // Display results
+            document.getElementById('scope3').textContent = scope3.toLocaleString();
+            
+            // Show results
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

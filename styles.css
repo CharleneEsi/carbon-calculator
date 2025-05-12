@@ -1,0 +1,138 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f0; /* off-white */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #6b8e23; /* olive green */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.calculator {
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #fffafa; /* slightly off-white */
+    border-radius: 8px;
+    border-left: 4px solid #ffb6c1; /* light pink */
+}
+
+h2 {
+    color: #6b8e23; /* olive green */
+    margin-top: 0;
+    font-size: 1.3em;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #ffb6c1; /* light pink */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s;
+    width: 250px;
+}
+
+button:hover {
+    background-color: #ff8fab; /* slightly darker pink */
+}
+
+.results {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f0f5e0; /* very light olive */
+    border-radius: 8px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.highlight {
+    font-weight: bold;
+    color: #6b8e23; /* olive green */
+    font-size: 1.2em;
+    padding: 15px 0;
+}
+
+.explanation {
+    font-style: italic;
+    color: #666;
+    margin: 15px 0;
+}
+
+.recommendations {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff5f5; /* very light pink */
+    border-radius: 5px;
+}
+
+.recommendations h3 {
+    color: #6b8e23; /* olive green */
+    margin-top: 0;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .calculator {
+        padding: 15px;
+    }
+    
+    button {
+        width: 100%;
+    }
+}
