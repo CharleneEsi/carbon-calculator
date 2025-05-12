@@ -5,36 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carbon Footprint Calculator</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Carbon Footprint Calculator</h1>
+        <header>
+            <h1><i class="fas fa-leaf"></i> Carbon Footprint Calculator</h1>
+            <p class="subtitle">Calculate your organization's environmental impact</p>
+        </header>
         
-        <div class="calculator">
+        <main class="calculator">
             <div class="input-section">
-                <h2>Scope 1 & 2 Emissions</h2>
+                <h2><i class="fas fa-fire"></i> Scope 1 & 2 Emissions</h2>
                 
                 <div class="form-group">
-                    <label for="fuel">Fuel Consumption (liters):</label>
+                    <label for="fuel"><i class="fas fa-gas-pump"></i> Fuel Consumption (liters):</label>
                     <input type="number" id="fuel" placeholder="e.g. 500">
                 </div>
                 
                 <div class="form-group">
-                    <label for="electricity">Electricity Usage (kWh):</label>
+                    <label for="electricity"><i class="fas fa-bolt"></i> Electricity Usage (kWh):</label>
                     <input type="number" id="electricity" placeholder="e.g. 2000">
                 </div>
                 
                 <div class="form-group">
-                    <label for="gas">Natural Gas Usage (therms):</label>
+                    <label for="gas"><i class="fas fa-fire"></i> Natural Gas Usage (therms):</label>
                     <input type="number" id="gas" placeholder="e.g. 300">
                 </div>
             </div>
             
             <div class="input-section">
-                <h2>Business Information</h2>
+                <h2><i class="fas fa-building"></i> Business Information</h2>
                 
                 <div class="form-group">
-                    <label for="industry">Industry:</label>
+                    <label for="industry"><i class="fas fa-industry"></i> Industry:</label>
                     <select id="industry">
                         <option value="">Select...</option>
                         <option value="manufacturing">Manufacturing</option>
@@ -46,17 +51,17 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="employees">Number of Employees:</label>
+                    <label for="employees"><i class="fas fa-users"></i> Number of Employees:</label>
                     <input type="number" id="employees" placeholder="e.g. 50">
                 </div>
                 
                 <div class="form-group">
-                    <label for="revenue">Annual Revenue ($):</label>
+                    <label for="revenue"><i class="fas fa-dollar-sign"></i> Annual Revenue ($):</label>
                     <input type="number" id="revenue" placeholder="e.g. 5000000">
                 </div>
                 
                 <div class="form-group">
-                    <label for="location">Location:</label>
+                    <label for="location"><i class="fas fa-globe"></i> Location:</label>
                     <select id="location">
                         <option value="">Select...</option>
                         <option value="us">United States</option>
@@ -67,14 +72,21 @@
                 </div>
             </div>
             
-            <button id="predict-btn" class="hidden">Predict Scope 3 Emissions</button>
+            <button id="predict-btn" class="hidden">
+                <i class="fas fa-calculator"></i> Predict Scope 3 Emissions
+            </button>
             
             <div class="results hidden" id="results">
-                <h2>Scope 3 Emission Prediction</h2>
+                <h2><i class="fas fa-chart-bar"></i> Scope 3 Emission Prediction</h2>
                 
-                <div class="result-item highlight">
-                    <span>Predicted Scope 3 Emissions:</span>
-                    <span id="scope3">0</span> kg CO₂e
+                <div class="result-card">
+                    <div class="result-item highlight">
+                        <span>Predicted Scope 3 Emissions:</span>
+                        <span id="scope3">0</span> kg CO₂e
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
                 </div>
                 
                 <div class="explanation">
@@ -82,45 +94,39 @@
                 </div>
                 
                 <div class="recommendations">
-                    <h3>Recommendations to Reduce Scope 3 Emissions:</h3>
+                    <h3><i class="fas fa-lightbulb"></i> Recommendations to Reduce Scope 3 Emissions:</h3>
                     <ul>
-                        <li>Optimize your supply chain logistics</li>
-                        <li>Engage with suppliers to reduce their emissions</li>
-                        <li>Encourage remote work to reduce employee commuting</li>
-                        <li>Select low-carbon business travel options</li>
+                        <li><i class="fas fa-truck"></i> Optimize your supply chain logistics</li>
+                        <li><i class="fas fa-handshake"></i> Engage with suppliers to reduce their emissions</li>
+                        <li><i class="fas fa-home"></i> Encourage remote work to reduce employee commuting</li>
+                        <li><i class="fas fa-plane"></i> Select low-carbon business travel options</li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </main>
+        
+        <footer>
+            <p>© 2023 CarbonCalc | Sustainable Analytics</p>
+        </footer>
     </div>
     
     <script>
-        // Show predict button when required fields are filled
-        const inputs = document.querySelectorAll('input, select');
-        inputs.forEach(input => {
+        document.querySelectorAll('input, select').forEach(input => {
             input.addEventListener('change', checkFields);
             input.addEventListener('input', checkFields);
         });
         
         function checkFields() {
-            const fuel = document.getElementById('fuel').value;
-            const electricity = document.getElementById('electricity').value;
-            const gas = document.getElementById('gas').value;
-            const industry = document.getElementById('industry').value;
-            const employees = document.getElementById('employees').value;
-            const revenue = document.getElementById('revenue').value;
-            const location = document.getElementById('location').value;
+            const requiredFields = ['fuel', 'electricity', 'gas', 'industry', 'employees', 'revenue', 'location'];
+            const allFilled = requiredFields.every(id => {
+                const element = document.getElementById(id);
+                return element.value.trim() !== '';
+            });
             
-            if (fuel && electricity && gas && industry && employees && revenue && location) {
-                document.getElementById('predict-btn').classList.remove('hidden');
-            } else {
-                document.getElementById('predict-btn').classList.add('hidden');
-            }
+            document.getElementById('predict-btn').classList.toggle('hidden', !allFilled);
         }
         
-        // Predict button functionality
         document.getElementById('predict-btn').addEventListener('click', function() {
-            // Get input values
             const fuel = parseFloat(document.getElementById('fuel').value) || 0;
             const electricity = parseFloat(document.getElementById('electricity').value) || 0;
             const gas = parseFloat(document.getElementById('gas').value) || 0;
@@ -129,52 +135,29 @@
             const revenue = parseFloat(document.getElementById('revenue').value) || 0;
             const location = document.getElementById('location').value;
             
-            // Calculate Scope 1 & 2 (for demo purposes)
-            const scope1 = fuel * 2.31 + gas * 5.3;
-            const scope2 = electricity * 0.85;
+            // Realistic-looking calculation
+            const base = (fuel * 2.31 + gas * 5.3 + electricity * 0.85) * 1.8;
+            const industryFactor = {
+                manufacturing: 2.2,
+                tech: 1.3,
+                retail: 1.7,
+                finance: 0.9,
+                healthcare: 1.4
+            }[industry] || 1;
             
-            // Create "sensible" random prediction based on inputs
-            let scope3;
+            const scope3 = Math.round(
+                (base * industryFactor) + 
+                (employees * 220) + 
+                (revenue * 0.00038)
+            );
             
-            // Base calculation
-            scope3 = (scope1 + scope2) * (1.5 + Math.random() * 1.5);
-            
-            // Adjust by industry
-            const industryFactors = {
-                manufacturing: 2.0,
-                tech: 1.2,
-                retail: 1.5,
-                finance: 0.8,
-                healthcare: 1.3
-            };
-            scope3 *= industryFactors[industry] || 1;
-            
-            // Adjust by employee count
-            scope3 += employees * (100 + Math.random() * 50);
-            
-            // Adjust by revenue
-            scope3 += revenue * (0.0003 + Math.random() * 0.0004);
-            
-            // Adjust by location
-            const locationFactors = {
-                us: 1.1,
-                eu: 0.9,
-                asia: 1.3,
-                other: 1.0
-            };
-            scope3 *= locationFactors[location] || 1;
-            
-            // Round to nearest 1000 for realism
-            scope3 = Math.round(scope3 / 1000) * 1000;
-            
-            // Display results
             document.getElementById('scope3').textContent = scope3.toLocaleString();
-            
-            // Show results
+            document.querySelector('.progress-fill').style.width = `${Math.min(100, scope3/10000)}%`;
             document.getElementById('results').classList.remove('hidden');
-            
-            // Scroll to results
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({
+                top: document.getElementById('results').offsetTop - 20,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>
